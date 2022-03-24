@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>My Music App</title>
+    <!-- Static Load -->
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<!--
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    -->
+    <link rel="stylesheet" href="{% static '/css/style.css' %}"/>
+</head>
+
+<body>
+<div id="box">
+
+    <!-- Navigation Bar -->
+    <header>
+        <nav>
+            <img src="{% static '/images/headphones.png' %}" alt="headphones">
+            <a href="{% url 'index' %}">Home</a><ul></ul>
+            <ul>
+                <!--Only for user with created profile-->
+            {% comment %}
+                {% if profile %}
+                <li><a href="{% url 'add album page' %}">Create Album</a></li>
+                <li><a href="{% url 'profile details page' %}">Profile</a></li>
+                {% endif %}
+             {% endcomment %}
+            </ul>
+        </nav>
+    </header>
+    <!-- End Navigation Bar -->
+
+    <!-- Main Content -->
+
+    {% block page_content %}
+    {% endblock %}
+
+    <!-- Footer -->
+    <footer>
+        <div>
+            &copy;SoftUni Team 2022. All rights reserved.
+        </div>
+    </footer>
+    <!-- End Footer -->
+
+</div>
+</body>
+</html>
