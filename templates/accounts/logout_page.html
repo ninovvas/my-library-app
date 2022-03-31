@@ -2,7 +2,8 @@
 {% extends 'base.html' %}
 {%  block page_content %}
 <section class="createPage">
-
+    <h1>Yoe has been successfull logout!</h1>
+    {% comment %}
     <form method="POST" action="{%  url 'login user' %}" >
         <fieldset>
             <legend>Login User</legend>
@@ -13,5 +14,6 @@
             </div>
         </fieldset>
     </form>
+    {% endcomment %}
 </section>
 {% endblock %}

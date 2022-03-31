@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, ListView
 
 from MyLibrary.common.view_mixins import RedirectToDashboard
@@ -13,8 +14,8 @@ class IndexView(RedirectToDashboard, TemplateView):
         return context
 
 
-class DashboardView(ListView):
+class DashboardView(LoginRequiredMixin, ListView):
     model = Book
     #form_class =
     template_name = 'main/dashboard.html'
-    context_object_name = 'pet_photos'
+    #context_object_name = 'pet_photos'

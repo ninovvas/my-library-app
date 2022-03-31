@@ -4,8 +4,8 @@ import requests
 class BookSearch:
 
     books_api = 'https://www.googleapis.com/books/v1/volumes'
-    parameters = {'q': 'isbn:',
-                  'fields': 'kind,totalItems,items(kind,volumeInfo(title,subtitle,authors,publisher,industryIdentifiers,imageLinks/thumbnail))'
+    parameters = {'q': '',
+                  'fields': 'kind,totalItems,items(kind,volumeInfo(title,subtitle,authors,publisher,industryIdentifiers,imageLinks/thumbnail,description,pageCount,language))'
                   }
     search = ''  # user's search query, populated in __init__
     results = ''  # response from google books, populated by parse_results()
@@ -45,57 +45,87 @@ class BookSearch:
         search_results = []
 
         if self.results['totalItems'] == 0:
-            return 'no results'
+            return None
         num_results = len(self.results['items'])
         for result in range(num_results):
 
             formatted_result = {
-                'title': self.get_result_title(result),
-                'authors': self.get_result_authors(result),
-                'publisher': self.get_result_publisher(result),
-                'thumbnail': self.get_thumbnail_url(result),
-                'goodreads': self.make_goodreads_url(result)
+                'title': self._get_result_title(result),
+                'authors': self._get_result_authors(result),
+                'publisher': self._get_result_publisher(result),
+                'thumbnail': self._get_thumbnail_url(result),
+                'goodreads': self._make_goodreads_url(result),
+                'description': self._get_result_description(result),
+                'page_count': self._get_result_page_count(result),
+                'language': self._get_result_language(result),
+                'isbns': self._get_result_all_isbns(result),
             }
-            search_results.append(formatted_result)
+            formatted_result_contains_none = [value is None for value in formatted_result.values()]
+            if True not in formatted_result_contains_none:
+                break
+            #search_results.append(formatted_result)
+        return formatted_result
 
-        return search_results
+    def _get_result_title(self, result):
+        __field_name = 'title'
+        __field_name_sub = 'subtitle'
+        title = None
+        if __field_name in self.results['items'][result]['volumeInfo']:
+            title = self.results['items'][result]['volumeInfo'][__field_name]
 
-    def get_result_title(self, result):
-        title = self.results['items'][result]['volumeInfo']['title']
+        if __field_name_sub in self.results['items'][result]['volumeInfo']:
+            title += ': ' + self.results['items'][result]['volumeInfo'][__field_name_sub]
 
-        if 'subtitle' in self.results['items'][result]['volumeInfo']:
-            title += ': ' + self.results['items'][result]['volumeInfo']['subtitle']
+        return title
 
-        return 'title: ' + title
+    def _get_result_authors(self, result):
+        __field_name = 'authors'
+        return self._get_volume_info_field_value(result, __field_name)
 
-    def get_result_authors(self, result):
-        authors = 'unkown'
-        if 'authors' in self.results['items'][result]['volumeInfo']:
-            authors = ', '.join(self.results['items'][result]['volumeInfo']['authors'])
-        return 'authors: ' + authors
+    def _get_result_description(self, result):
+        __field_name = 'description'
+        return self._get_volume_info_field_value(result, __field_name)
 
-    def get_result_publisher(self, result):
-        publisher = 'unknown'
+    def _get_result_page_count(self, result):
+        __field_name = 'pageCount'
+        return self._get_volume_info_field_value(result, __field_name)
 
-        if 'publisher' in self.results['items'][result]['volumeInfo']:
-            publisher = self.results['items'][result]['volumeInfo']['publisher']
+    def _get_result_language(self, result):
+        __field_name = 'language'
+        return self._get_volume_info_field_value(result, __field_name)
 
-        return 'publisher: ' + publisher
+    def _get_volume_info_field_value(self, result, field_name):
+        field_result = None
+        if field_name in self.results['items'][result]['volumeInfo']:
+            field_result = self.results['items'][result]['volumeInfo'][field_name]
+        return field_result
 
-    def get_thumbnail_url(self, result):
-        thumbnail = ''
-        if 'imageLinks' in self.results['items'][result]['volumeInfo']:
-            thumbnail = self.results['items'][result]['volumeInfo']['imageLinks']['thumbnail']
+    def _get_result_publisher(self, result):
+        publisher = None
+        __field_name = 'publisher'
+
+        if __field_name in self.results['items'][result]['volumeInfo']:
+            publisher = self.results['items'][result]['volumeInfo'][__field_name]
+
+        return publisher
+
+    def _get_thumbnail_url(self, result):
+        __field_name = 'imageLinks'
+        thumbnail = None
+        if __field_name in self.results['items'][result]['volumeInfo']:
+            thumbnail = self.results['items'][result]['volumeInfo'][__field_name]['thumbnail']
         return thumbnail
 
-    def make_goodreads_url(self, result):
+    def _make_goodreads_url(self, result):
         goodreads = 'https://www.goodreads.com/book/show/'
-        id = str(self.get_goodreads_id(result))
-        return goodreads + id
+        id = self._get_goodreads_id(result)
+        if id is None:
+            return None
+        return goodreads + str(id)
 
-    def get_goodreads_id(self, result):
-        goodreads_id = 0
-        isbn = self.get_result_isbn(result)
+    def _get_goodreads_id(self, result):
+        goodreads_id = None
+        isbn = self._get_result_isbn(result)
         if isbn:
             goodreads_api = 'https://www.goodreads.com/book/isbn_to_id'
             params = {'key' : 'Hc3p3luBbcApaSFOTIgadQ', 'isbn' : isbn}
@@ -103,12 +133,19 @@ class BookSearch:
             goodreads_id = goodreads_response.text
         return goodreads_id
 
-    def get_result_isbn(self, result):
-        if 'industryIdentifiers' in self.results['items'][result]['volumeInfo']:
-            for id in self.results['items'][result]['volumeInfo']['industryIdentifiers']:
+    def _get_result_isbn(self, result):
+        __field_name = 'industryIdentifiers'
+        if __field_name in self.results['items'][result]['volumeInfo']:
+            for id in self.results['items'][result]['volumeInfo'][__field_name]:
                 if id['type'] == 'ISBN_13':
                     return id['identifier']
-        return 0
+        return None
 
-    def get_results_count(self):
-        return self.results.get("totalItems")
+    def _get_result_all_isbns(self, result):
+        __field_name = 'industryIdentifiers'
+        if __field_name in self.results['items'][result]['volumeInfo']:
+            return self.results['items'][result]['volumeInfo'][__field_name]
+        return None
+
+    def _get_results_count(self):
+        return self.results.get("totalItems", None)

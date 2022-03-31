@@ -1,5 +1,7 @@
 from django.shortcuts import redirect
 
+import MyLibrary
+
 
 class RedirectToDashboard:
     def dispatch(self, request, *args, **kwargs):
