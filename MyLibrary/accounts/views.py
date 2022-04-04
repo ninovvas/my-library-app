@@ -24,7 +24,7 @@ class UserRegisterView(RedirectToDashboard,CreateView):
 
 class UserLoginView(LoginView):
     template_name = 'accounts/login_page.html'
-    success_url = reverse_lazy('dashboard')
+    #success_url = reverse_lazy('dashboard')
     success_url_dashboard = reverse_lazy('dashboard')
     success_url_search_book = reverse_lazy('search book')
 

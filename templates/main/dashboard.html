@@ -2,15 +2,62 @@
 {% extends 'base.html' %}
 {%  block page_content %}
 
+    {% comment %}
+
 <section id="catalogPage">
+{% endcomment %}
+<section>
 
     <!--  If No albums in catalog -->
-    {% if not albums %}
-    <p>No Books!</p>
+    <h1>
+    {% if list_books %}
+     All My Books
     {% else %}
+        No books available!
+        </h1>
+        <p>Please add book to your library!</p>
+    {% endif %}
     <!-- If albums in catalog -->
-    <h1>All My Books</h1>
-          {% csrf_token %}
+
+    {% csrf_token %}
+    {% if list_books %}
+    <div class="container mt-5 mb-5">
+        <div class="d-flex justify-content-center row">
+            <div class="col-md-10">
+                {% for book in list_books %}
+                    <div class="row p-2 bg-white border rounded mt-2">
+                        <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="{{ book.image }}"></div>
+                        <div class="col-md-6 mt-1">
+                            <h5>{{ book.title }}</h5>
+                            {%  comment %}
+                            <div class="d-flex flex-row">
+                                <div class="ratings mr-2"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div><span>310</span>
+                            </div>
+                            {% endcomment %}
+                            <div class="mt-1 mb-1 spec-1">
+                                {% for author in book.authors.all %}
+                                <span>{{ author.name }}</span>
+                                {% endfor %}
+                            </div>
+                            <div class="mt-1 mb-1 spec-1">
+                                <span>Unique design</span>
+                                <span class="dot"></span><span>For men</span>
+                                <span class="dot"></span><span>Casual<br></span>
+                            </div>
+                            <p class="text-justify text-truncate para mb-0">{{ book.description }}</p>
+                        </div>
+                        <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                            <div class="d-flex flex-column mt-4">
+                                <button class="btn btn-primary btn-sm" type="button">Details</button>
+                                <button class="btn btn-outline-primary btn-sm mt-2" type="button">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endif %}
 
     <!-- First Card-Box in catalog -->
         {% comment %}
@@ -31,7 +78,7 @@
     </div>
      {% endfor %}
      {% endcomment %}
-    {% endif %}
+
     <!-- End First Card-Box in catalog -->
 
     <!-- Second Card-Box in catalog -->

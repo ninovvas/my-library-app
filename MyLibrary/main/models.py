@@ -1,9 +1,8 @@
 from django.core.validators import MinLengthValidator
 from django.db import models
-
-# Create your models here.
 from MyLibrary.accounts.models import AppUser
 from MyLibrary.common.validators import validate_only_letters
+from cloudinary import models as cloudinary_models
 
 
 class Author(models.Model):
@@ -156,6 +155,19 @@ class Book(models.Model):
 
     pubdate = models.DateField(
         auto_now_add=True,
+    )
+
+    #image = cloudinary_models.CloudinaryField('image')
+    # image = models.ImageField(
+    #     upload_to='images/',
+    #     null=True,
+    #     blank=True,
+    # )
+
+    image = models.URLField(
+        null=True,
+        blank=True,
+
     )
 
     authors = models.ManyToManyField(

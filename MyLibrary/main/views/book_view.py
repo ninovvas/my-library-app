@@ -37,6 +37,12 @@ class CreateBookView(LoginRequiredMixin, CreateView):
                     pass
         return initial_obj
 
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
@@ -50,10 +56,15 @@ class SearchBookView(LoginRequiredMixin, FormView):
     success_url = reverse_lazy('add book')
     fields = []
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
 
     def form_valid(self, form):
-        #form.instance.user = self.request.user
+        #form. = self.request.user
+        form.user = self.request.user
 
         search_query = form.cleaned_data
         print(f"search_query = {search_query}")
