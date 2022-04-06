@@ -139,6 +139,11 @@ class Book(models.Model):
         blank=True,
     )
 
+    end_read_date = models.DateField(
+        null=True,
+        blank=True,
+    )
+
     read = models.BooleanField(
         default=False,
     )

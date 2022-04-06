@@ -9,28 +9,9 @@
             <div class="container">
                 {{form }}
                  {% csrf_token %}
-                <!-- Form for Adding Album -->
-                 {% comment %}
-                <label for="name">ISBN:</label>
+                <button class="add-album" type="submit">ISBN, Title Search</button>
+                <a href="{%  url 'add book' %}" ><button type="button" class="add-album">Add book manual</button></a>
 
-                <input id="name" type="text" placeholder="ISBN" required>
-
-
-                <label for="artist">Artist:</label>
-                <input id="artist" type="text" placeholder="Artist" required>
-
-
-                <label for="description">Description:</label>
-                <textarea id="description" placeholder="Description"></textarea>
-
-                <label for="imgUrl">Image URL:</label>
-                <input id="imgUrl" type="url" placeholder="Image URL" required>
-
-                <label for="price">Price:</label>
-                <input id="price" type="number" placeholder="Price" required>
-                {% endcomment %}
-                <!-- Button for Adding Album -->
-                <button class="add-album" type="submit">Search</button>
             </div>
         </fieldset>
     </form>

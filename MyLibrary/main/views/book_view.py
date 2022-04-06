@@ -1,10 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, TemplateView, FormView
-from django.views.generic.detail import SingleObjectMixin
+from django.views.generic import CreateView, TemplateView, FormView, ListView, UpdateView, DeleteView
+from django.views.generic.detail import SingleObjectMixin, DetailView
 
-from MyLibrary.main.forms import SearchBookForm, CreateBookForm, AuthorsBookForm
+from MyLibrary.main.forms import SearchBookForm, CreateBookForm, AuthorsBookForm, EditBookForm
 from MyLibrary.main.models import Book
 from MyLibrary.common.BookAPI import BookSearch
 
@@ -117,6 +117,27 @@ class SearchBookView(LoginRequiredMixin, FormView):
             if session_key in self.request.session:
                 del self.request.session[session_key]
 
+
+class EditBookView(LoginRequiredMixin, UpdateView):
+    model= Book
+    template_name = 'main/book_edit.html'
+    form_class = EditBookForm
+
+    def get_success_url(self):
+        return reverse_lazy('details book', kwargs={'pk': self.object.id})
+
+    # def get_queryset(self):
+    #     return super() \
+    #         .get_queryset() \
+    #         .prefetch_related('authors') \
+    #         .prefetch_related('publisher')
+
+
+class DetailsBookView(LoginRequiredMixin, DetailView):
+    pass
+
+class DeleteBookView(LoginRequiredMixin, DeleteView):
+    pass
 
 
 

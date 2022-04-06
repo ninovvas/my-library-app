@@ -22,20 +22,51 @@ footer {
     color: white;
 }
 
+nav_auth {
+    background-color: #4e3b2b;
+     opacity: 0.9;
+    width: 100%;
+    display: flex;
+    font-size: 16px;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 5px 0 3px;
+    margin: 0;
+    color: white;
+}
+
 nav a {
     text-decoration: none;
     color: #8f8f8f;
     font-size: 20px;
     font-weight: bolder;
     position: relative;
-    margin: 20px;
+    margin: 10px;
+}
+
+nav_auth a {
+    text-decoration: none;
+    color: #8f8f8f;
+    font-size: 20px;
+    font-weight: bolder;
+    position: relative;
+    margin: 10px;
 }
 
 nav ul {
     margin: 0 0 0 auto;
 }
 
+nav_auth ul {
+    margin: 0 0 0 auto;
+}
+
 nav ul li {
+    display: inline;
+    margin: 0 2px;
+}
+
+nav_auth ul li {
     display: inline;
     margin: 0 2px;
 }
@@ -47,7 +78,12 @@ li::before {
 nav a {
     text-decoration: none;
     border-radius: 50%;
-    padding: 0.5em;
+    color: white;
+}
+
+nav_auth a {
+    text-decoration: none;
+    border-radius: 50%;
     color: white;
 }
 
@@ -63,6 +99,12 @@ footer {
 }
 
 nav a:hover {
+    cursor: pointer;
+    color: #45a29e;
+    font-weight: bolder;
+}
+
+nav_auth a:hover {
     cursor: pointer;
     color: #45a29e;
     font-weight: bolder;
@@ -98,7 +140,8 @@ nav > img {
 
 /* Some custom styles to beautify this example */
 .row{
-    background: #dbdfe5;
+    background: #4e3b2b;
+    opacity: 0.9;
 }
 .demo-content{
     padding: 25px;

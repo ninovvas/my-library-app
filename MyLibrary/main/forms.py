@@ -12,16 +12,16 @@ from MyLibrary.main.models import Book, Author, Publisher
 
 
 class SearchBookForm(forms.Form):
-    isbn = forms.CharField(max_length=255)
+    input_search = forms.CharField(max_length=255)
 
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.user = user
 
     class Meta:
-        fields = ('isbn',)
+        fields = ('input_search',)
         labels = {
-            'isbn': 'ISBN',
+            'input_search': 'ISBN or Title',
     }
 
 
@@ -133,6 +133,17 @@ class AuthorsBookForm(ModelForm):
         labels = {
             'name': 'Author Name',
         }
+
+
+class EditBookForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+    class Meta:
+        model = Book
+        exclude = ['user']
 
 
 

@@ -8,10 +8,17 @@
     <!-- Static Load -->
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!--
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     -->
+
     <link rel="stylesheet" href="{% static '/css/style.css' %}"/>
+
+
     <!--
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -31,27 +38,58 @@
 
     <!-- Navigation Bar -->
     <header>
+
+
         <nav>
+            <a class="active" href="{% url 'index' %}"><i class="fa fa-fw fa-home"></i> Home</a>
+        {% comment %}
+            <a href="#"><i class="fa fa-fw fa-search"></i> Search</a>
+            <a href="#"><i class="fa fa-fw fa-envelope"></i> Contact</a>
+            <a href="#"><i class="fa fa-fw fa-user"></i> Login</a>
+            <a href="#"><i class="fa fa-fw fa-user"></i> Logout</a>
+            <a href="#"><i class="fa fa-fw fa-plus"></i> Add Book</a>
+          {% endcomment %}
+        {% comment %}
                 <img src="{% static '/images/headphones.png' %}" alt="headphones">
                 <a href="{% url 'index' %}">Home</a>
+          {% endcomment %}
 
                 {% if user.is_superuser %}
                     <a href="{% url 'category view' %}">Categories</a>
                 {% endif %}
             <ul>
+
                 <!--Only for user with created profile-->
-                    <li><a href="{% url 'search book' %}">Search Book</a></li>
                 {% if  not user.is_authenticated and not user.is_superuser %}
-                    <li><a href="{% url 'login user' %}">Login</a></li>
-                    <li><a href="{% url 'register' %}">Registration</a></li>
+                    <li><a href="{% url 'login user' %}"><i class="fa fa-fw fa-user"></i>Login</a></li>
+                    <li><a href="{% url 'register' %}"><i class="fa fa-fw fa-users"></i>Registration</a></li>
                 {% endif %}
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'logout user' %}">Logout</a></li>
+                    <li><a href="{% url 'logout user' %}"><i class="fa fa-fw fa-user"></i>Logout</a></li>
                 {% endif %}
 
             </ul>
         </nav>
     </header>
+    {% if user.is_authenticated and not user.is_superuser  %}
+        <header>
+            <nav_auth>
+                <a href="{% url 'search book' %}"><i class="fa fa-fw fa-plus"></i>Add Book</a>
+                <ul>
+
+                        <li>
+                            <form method="GET" action="{% url 'user search book' %}" class="form-inline my-1 my-lg-0">
+                            {% csrf_token %}
+                          <input class="form-control mr-sm-2"  name="q" type="search" placeholder="Search" aria-label="Search">
+                          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                         </form>
+                        </li>
+                </ul>
+
+
+            </nav_auth>
+        </header>
+    {% endif %}
     <!-- End Navigation Bar -->
 
     <!-- Main Content -->

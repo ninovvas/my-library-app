@@ -80,6 +80,12 @@
                                 </div>
                             {% endif %}
 
+                            {%if book.description %}
+                                 <div class="mt-1 mb-1 spec-1">
+                                     <b>Description:</b>
+                                    <span> {{ book.description }}</span>
+                                </div>
+                            {% endif %}
                         </div>
                         <div class="align-items-center align-content-center col-md-3 border-left mt-1">
                             <div class="d-flex flex-column mt-4">

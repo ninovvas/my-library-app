@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, ListView
+from django.db.models import Q
 
 from MyLibrary.common.view_mixins import RedirectToDashboard
 from MyLibrary.main.models import Book, Author
@@ -26,17 +27,15 @@ class DashboardView(LoginRequiredMixin, ListView):
             user=self.request.user,
         )
 
-    # def detail(request, place_id):
-    #     place = Place.objects.get(pk=place_id)
-    #     areas = place.area.all()
-    #
-    #     return render_to_response('detail.html', {
-    #         "place": place,
-    #         "areas": areas,
-    #     })
-    #
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['books'] = self.books
-    #     context['author'] = self.
-    #     return context
+
+class UserSearchBookView(ListView):
+    model = Book
+    template_name = 'main/result_book_search.html'
+    context_object_name = 'result_search'
+
+    def get_queryset(self):
+        search_text = self.request.GET.get('q')
+        return Book.objects.filter(
+            Q(user=self.request.user) & Q(title__icontains=search_text) | Q(isbn10__icontains=search_text) |
+            Q(isbn13__icontains=search_text)
+        )
