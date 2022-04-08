@@ -2,13 +2,12 @@
 {% extends 'base.html' %}
 {%  block page_content %}
 <section class="createPage">
-
     <form method="POST" action="{%  url 'edit book' book.pk %}" >
         <fieldset>
             <legend>Edit Book</legend>
                 {{ form }}
                 {% csrf_token %}
-                <button class="add-album" type="submit">Edit</button>
+                <button class="edit-book" type="submit">Edit</button>
             </div>
         </fieldset>
     </form>

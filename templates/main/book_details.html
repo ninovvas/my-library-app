@@ -10,25 +10,22 @@
 
     <!--  If No albums in catalog -->
     <h1>
-    {% if list_books %}
-     All My Books
+    {% if book_details %}
+     Book Details
     {% else %}
-        No books available!
+        It is something wrong!
         </h1>
-        <p>Please add book to your library!</p>
     {% endif %}
-    <!-- If albums in catalog -->
 
-
-    {% if list_books %}
+    {% if book_details %}
     <div class="container mt-5 mb-5 " >
         <div class="d-flex justify-content-center">
             <div class="col-md-10">
-                {% for book in list_books %}
+
                     <div class="row p-2 bg-white border rounded mt-2">
-                        <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="{{ book.image }}"></div>
+                        <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="{{ book_details.image }}"></div>
                         <div class="col-md-6 mt-1">
-                            <h5>{{ book.title }}</h5>
+                            <h5>{{ book_details.title }}</h5>
                             {%  comment %}
                             <div class="d-flex flex-row">
                                 <div class="ratings mr-2"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div><span>310</span>
@@ -36,127 +33,69 @@
                             {% endcomment %}
                             <div class="mt-1 mb-1 spec-1">
                                 <b>Authors:</b>
-                                {% for author in book.authors.all %}
+                                {% for author in book_details.authors.all %}
                                     <span> <span class="dot"></span>{{ author.name }}</span>
                                 {% endfor %}
                             </div>
                             <div class="mt-1 mb-1 spec-1">
                                  <b>ISBN-13:</b>
-                                <span> {{ book.isbn13 }}</span>
+                                <span> {{ book_details.isbn13 }}</span>
                             </div>
-                            {%if book.publisher %}
+                            {%if book_details.publisher %}
                                  <div class="mt-1 mb-1 spec-1">
                                      <b>Publisher:</b>
-                                    <span> {{ book.publisher.publisher_name }}</span>
+                                    <span> {{ book_details.publisher.publisher_name }}</span>
                                 </div>
                             {% endif %}
-                            {%if book.page_count %}
+                            {%if book_details.page_count %}
                                  <div class="mt-1 mb-1 spec-1">
                                      <b>Pages:</b>
-                                    <span> {{ book.page_count }}</span>
+                                    <span> {{ book_details.page_count }}</span>
                                 </div>
                             {% endif %}
 
                              <div class="mt-1 mb-1 spec-1">
                                  <b>Read:</b>
-                                 {% if book.read %}
+                                 {% if book_details.read %}
                                      <i class="fa fa-fw fa-check"></i>
                                  {% else%}
                                      <i class="fa fa-fw fa-edit"></i>
                                  {% endif %}
                             </div>
-                            {% if book.start_read_date %}
+                            {% if book_details.start_read_date %}
                                 <div class="mt-1 mb-1 spec-1">
                                      <b>Star Read Date:</b>
 
-                                          <span> {{ book.start_read_date }}</span>
+                                          <span> {{ book_details.start_read_date }}</span>
 
                                 </div>
                             {% endif %}
-                             {% if book.end_read_date %}
+                             {% if book_details.end_read_date %}
                                  <div class="mt-1 mb-1 spec-1">
                                      <b>End Read Date:</b>
-                                          <span> {{ book.end_read_date }}</span>
+                                          <span> {{ book_details.end_read_date }}</span>
                                 </div>
                             {% endif %}
 
-                            {%if book.description %}
+                            {%if book_details.description %}
                                  <div class="mt-1 mb-1 spec-1">
                                      <b>Description:</b>
-                                    <span> {{ book.description }}</span>
+                                    <span> {{ book_details.description }}</span>
                                 </div>
                             {% endif %}
                         </div>
                         <div class="align-items-center align-content-center col-md-3 border-left mt-1">
                             <div class="d-flex flex-column mt-4">
-                                <a href="{% url 'edit book' book.pk %}"><button class="btn btn-primary btn-sm" type="button">Edit</button></a>
-                                <a href="{% url 'details book' book.pk %}">  <button class="btn btn-default" ><span class="glyphicon glyphicon-edit"></span> Details</button></a>
+                                <a href="{% url 'edit book' book_details.pk %}"><button class="btn-primary btn-lg" type="button"><i class="fa fa-edit">Edit</i></button></a>
+                                <a href="{% url 'delete book' book_details.pk %}"><button class="btn-primary btn-lg" type="button"><i class="fa fa-minus-circle">Delete</i></button></a>
                             </div>
                         </div>
                     </div>
-                {% endfor %}
+
             </div>
         </div>
     </div>
 {% endif %}
-
-    <!-- First Card-Box in catalog -->
-        {% comment %}
-     {% for album in albums %}
-    <div class="card-box">
-        <img src="{{ album.image_url }}" alt="{{ album.description }}">
-        <div>
-            <div class="text-center">
-                <p class="name">Name: {{ album.name}}</p>
-                <p class="artist">Artist: {{ album.artist }}</p>
-                <p class="genre">Genre: {{ album.genre }}</p>
-                <p class="price">Price: ${{ album.price|floatformat:2 }}</p>
-            </div>
-            <div class="btn-group">
-                <a href="{% url 'album details page' album.id%}">Details</a>
-            </div>
-        </div>
-    </div>
-     {% endfor %}
-     {% endcomment %}
-
-    <!-- End First Card-Box in catalog -->
-
-    <!-- Second Card-Box in catalog -->
-    {% comment %}
-    <div class="card-box">
-        <img src="/static/images/pinkFloyd.jpg">
-        <div>
-            <div class="text-center">
-                <p class="name">Name: The Dark Side of the Moon</p>
-                <p class="artist">Artist: Pink Floyd</p>
-                <p class="genre">Genre: Rock Music</p>
-                <p class="price">Price: $28.75</p>
-            </div>
-            <div class="btn-group">
-                <a href="#">Details</a>
-            </div>
-        </div>
-    </div>
-    <!-- End Second Card-Box in catalog -->
-
-    <!-- Third Card-Box in catalog -->
-    <div class="card-box">
-        <img src="/static/images/Lorde.jpg">
-        <div>
-            <div class="text-center">
-                <p class="name">Name: Melodrama</p>
-                <p class="artist">Artist: Lorde</p>
-                <p class="genre">Genre: Pop Music</p>
-                <p class="price">Price: $7.33</p>
-            </div>
-            <div class="btn-group">
-                <a href="#">Details</a>
-            </div>
-        </div>
-    </div>
-    <!-- End Third Card-Box in catalog -->
-    {% endcomment %}
 
 </section>
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.contrib.auth import login
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView
 
 # Create your views here.
 from django.urls import reverse_lazy
@@ -43,3 +43,6 @@ class UserLoginView(LoginView):
 class UserLogoutView(LogoutView):
     template_name = 'accounts/logout_page.html'
     success_url = reverse_lazy('logout user')
+
+class UserResetPasswordView(PasswordResetView):
+    pass

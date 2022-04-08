@@ -48,3 +48,28 @@ transbox {
   border: 1px solid black;
   opacity: 0.6;
 }
+
+/* Customer Buttons */
+
+/* ------- customize primary buttons -------- */
+    /* custom primary buttons */
+
+    .btn-primary {
+        color: #212529;
+        background-color: #7cc;
+        border-color: #5bc2c2;
+        width: 120px !important;
+
+    }
+
+    .btn-primary:hover {
+        color: #212529;
+        background-color: #52bebe;
+        border-color: #8ad3d3
+    }
+
+    .btn-primary:focus,
+    .btn-primary.focus {
+        box-shadow: 0 0 0 .2rem rgba(91, 194, 194, 0.5)
+    }
+

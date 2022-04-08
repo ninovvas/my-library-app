@@ -4,7 +4,8 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, TemplateView, FormView, ListView, UpdateView, DeleteView
 from django.views.generic.detail import SingleObjectMixin, DetailView
 
-from MyLibrary.main.forms import SearchBookForm, CreateBookForm, AuthorsBookForm, EditBookForm
+from MyLibrary.main.forms import SearchBookForm, CreateBookForm, AuthorsBookForm, EditBookForm, DetailsBookForm, \
+    DeleteBookForm
 from MyLibrary.main.models import Book
 from MyLibrary.common.BookAPI import BookSearch
 
@@ -26,7 +27,6 @@ class CreateBookView(LoginRequiredMixin, CreateView):
         initial = self._set_initial_value(initial)
         return initial
 
-
     def _set_initial_value(self, initial_obj):
         for field_name in all_fields:
             if self.request.session.get(field_name, ''):
@@ -36,7 +36,6 @@ class CreateBookView(LoginRequiredMixin, CreateView):
                 except:
                     pass
         return initial_obj
-
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -48,8 +47,6 @@ class CreateBookView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-#TemplateView
-#class SearchBookView(LoginRequiredMixin, FormView):
 class SearchBookView(LoginRequiredMixin, FormView):
     template_name = 'main/book_search.html'
     form_class = SearchBookForm
@@ -63,7 +60,6 @@ class SearchBookView(LoginRequiredMixin, FormView):
 
 
     def form_valid(self, form):
-        #form. = self.request.user
         form.user = self.request.user
 
         search_query = form.cleaned_data
@@ -119,25 +115,45 @@ class SearchBookView(LoginRequiredMixin, FormView):
 
 
 class EditBookView(LoginRequiredMixin, UpdateView):
-    model= Book
+    model = Book
     template_name = 'main/book_edit.html'
     form_class = EditBookForm
 
     def get_success_url(self):
         return reverse_lazy('details book', kwargs={'pk': self.object.id})
 
-    # def get_queryset(self):
-    #     return super() \
-    #         .get_queryset() \
-    #         .prefetch_related('authors') \
-    #         .prefetch_related('publisher')
-
 
 class DetailsBookView(LoginRequiredMixin, DetailView):
-    pass
+    model = Book
+    template_name = 'main/book_details.html'
+    form_class = DetailsBookForm
+    context_object_name = 'book_details'
+
 
 class DeleteBookView(LoginRequiredMixin, DeleteView):
-    pass
+    model = Book
+    template_name = "main/book_delete.html"
+    form_class = DeleteBookForm
+
+    success_url = reverse_lazy('dashboard')
+
+    # def get_queryset(self):
+    #     owner = self.request.user
+    #     return self.model.objects.filter(user=owner)
+
+    # def get_queryset(self, **kwargs):
+    #     query = super().get_queryset()
+    #     return Book.objects.filter(
+    #         user=self.request.user,
+    #         authors__book__authors=query.
+    #     )
+
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #     queryset = queryset.filter(pk=self.pk)
+    #
+    #     return queryset
+
 
 
 

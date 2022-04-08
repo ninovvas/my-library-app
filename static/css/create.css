@@ -67,7 +67,7 @@ textarea {
   color: white;
 }
 
-.add-album, .edit-album, .delete-album, .delete-profile {
+.add-book, .edit-book, .delete-book, .delete-profile {
 	width: 150px;
 	height: 50px;
 	cursor: pointer;

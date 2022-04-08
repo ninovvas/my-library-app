@@ -3,12 +3,12 @@
 {%  block page_content %}
 <section class="createPage">
 
-    <form method="POST" action="{%  url 'add book' %}" >
+    <form method="post" action="{%  url 'add book' %}" >
         <fieldset>
             <legend>Add Book</legend>
                 {{ form }}
                 {% csrf_token %}
-                <button class="add-album" type="submit">Add New Book</button>
+                <button class="add-book" type="submit">Add New Book</button>
             </div>
         </fieldset>
     </form>

@@ -8,6 +8,7 @@ from django import forms
 from django.core.files import File
 from django.forms import ModelForm
 
+from MyLibrary.common.helper import DisabledFieldsFormMixin
 from MyLibrary.main.models import Book, Author, Publisher
 
 
@@ -140,10 +141,36 @@ class EditBookForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+    class Meta:
+        model = Book
+        exclude = ['user']
+
+
+class DetailsBookForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     class Meta:
         model = Book
         exclude = ['user']
+
+
+class DeleteBookForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        #self._init_disabled_fields()
+        # for _, field in self.fields.items():
+        #     field.widget.attrs['readonly'] = 'readonly'
+        #     field.required = False
+
+    # def save(self, commit=True):
+    #     self.instance.delete()
+    #     return self.instance
+
+    class Meta:
+        model = Book
+        exclude = ['user']
+
 
 
 
