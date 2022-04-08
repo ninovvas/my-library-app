@@ -64,7 +64,7 @@ class SearchBookView(LoginRequiredMixin, FormView):
 
         search_query = form.cleaned_data
         print(f"search_query = {search_query}")
-        book_search = BookSearch(search_query['isbn'])
+        book_search = BookSearch(search_query['input_search'])
         book_search.make_a_search()
         results = book_search.get_search_results()
         print(f"results = {results}")
@@ -133,7 +133,8 @@ class DetailsBookView(LoginRequiredMixin, DetailView):
 class DeleteBookView(LoginRequiredMixin, DeleteView):
     model = Book
     template_name = "main/book_delete.html"
-    form_class = DeleteBookForm
+    #form_class = DeleteBookForm
+
 
     success_url = reverse_lazy('dashboard')
 

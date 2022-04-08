@@ -2,11 +2,12 @@
 {% extends 'base.html' %}
 {%  block page_content %}
 <section class="createPage">
-    <form method="post" action="{%  url 'delete book' book.pk %}" >
+    <form method="post" action="" >
         <fieldset>
             <legend>Delete Book</legend>
               <p>Are you sure you want to delete the book "{{ object.title }}"?</p>
                 {% csrf_token %}
+
                 <button class="delete-book" type="submit">Delete Book</button>
 
         </fieldset>

@@ -19,6 +19,7 @@ class BookSearch:
 
     def __init__(self, search=''):
         self.search = search
+        self.search_item = search
 
 
     def make_a_search(self):
@@ -44,11 +45,15 @@ class BookSearch:
     def get_search_results(self):
         search_results = []
 
+        #format_search_item = self.search_item.upper()
+        #format_search_item = self.search_item.strip()
+        format_search_item = self.search_item
+
         if self.results['totalItems'] == 0:
             return None
         num_results = len(self.results['items'])
+        is_results = False
         for result in range(num_results):
-
             formatted_result = {
                 'title': self._get_result_title(result),
                 'authors': self._get_result_authors(result),
@@ -60,11 +65,35 @@ class BookSearch:
                 'language': self._get_result_language(result),
                 'isbns': self._get_result_all_isbns(result),
             }
-            formatted_result_contains_none = [value is None for value in formatted_result.values()]
-            if True not in formatted_result_contains_none:
+            is_found = False
+            for field_name, result_value in formatted_result.items():
+                if 'title' == field_name:
+                    if format_search_item in result_value:
+                        is_found = True
+                        break
+                if 'isbns' == field_name:
+                    for d_value in result_value:
+                        for value in d_value.values():
+                            if format_search_item in value:
+                                is_found = True
+                                break
+                        if is_found:
+                            break
+                if is_found:
+                    break
+
+            if is_found:
+                is_results = True
                 break
+
+            #formatted_result_contains_none = [value is None for value in formatted_result.values()]
+            #if True not in formatted_result_contains_none:
+            #    break
             #search_results.append(formatted_result)
-        return formatted_result
+        if is_results:
+            return formatted_result
+        else:
+            return {}
 
     def _get_result_title(self, result):
         __field_name = 'title'

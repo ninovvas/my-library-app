@@ -137,9 +137,13 @@ class AuthorsBookForm(ModelForm):
 
 
 class EditBookForm(ModelForm):
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+    def get_queryset(self):
+        #queryset = super().get_queryset()
+        queryset = Book.objects.get(user=self.instance.user, authors__book__authors=self.object.id)
+        return queryset
 
     class Meta:
         model = Book
@@ -163,9 +167,12 @@ class DeleteBookForm(ModelForm):
         #     field.widget.attrs['readonly'] = 'readonly'
         #     field.required = False
 
-    # def save(self, commit=True):
-    #     self.instance.delete()
-    #     return self.instance
+    def save(self, commit=True):
+        #book = Book.objects.get(id=self.object.id)
+        #author = Author.objects.get(book__authors__book=self.object.id)
+        #book.delete(author)
+        self.instance.delete()
+        return self.instance
 
     class Meta:
         model = Book
