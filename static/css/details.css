@@ -4,6 +4,8 @@
     border-radius: 7px 7px 7px 7px;
     box-shadow: 0 0 1.5px 3px gray;
     margin: 30px auto 200px;
+    background: white;
+    opacity: 0.9;
 }
 
 .albumCover, .profilePage {
@@ -11,16 +13,19 @@
     height: 100%;
     width: auto;
     margin-right: 20px;
+
 }
 
 .albumCover img, .profilePage img {
     border-radius: 12px 0 0 7px;
     height: 100%;
+
 }
 
 .albumText, .profileText {
     padding-left: 10px;
     padding-top: 20px;
+
 }
 
 .albumText h1, .profileText h1 {

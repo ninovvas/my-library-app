@@ -162,21 +162,18 @@ class DetailsBookForm(ModelForm):
 class DeleteBookForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        #self._init_disabled_fields()
-        # for _, field in self.fields.items():
-        #     field.widget.attrs['readonly'] = 'readonly'
-        #     field.required = False
 
     def save(self, commit=True):
-        #book = Book.objects.get(id=self.object.id)
-        #author = Author.objects.get(book__authors__book=self.object.id)
-        #book.delete(author)
         self.instance.delete()
         return self.instance
 
     class Meta:
         model = Book
         exclude = ['user']
+
+
+class CreateAuthorForm(ModelForm):
+    pass
 
 
 

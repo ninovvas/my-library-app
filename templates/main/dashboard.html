@@ -10,12 +10,9 @@
 
     <!--  If No albums in catalog -->
     <h1>
-    {% if list_books %}
-     All My Books
-    {% else %}
-        No books available!
-        </h1>
-        <p>Please add book to your library!</p>
+    {% if not list_books %}
+        <h1>No books available!</h1>
+        <h2>Please add book to your library!</h2>
     {% endif %}
     <!-- If albums in catalog -->
 

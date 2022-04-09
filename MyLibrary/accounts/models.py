@@ -5,7 +5,7 @@ from django.core.validators import MinLengthValidator
 from django.db import models
 
 from MyLibrary.accounts.managers import AppUsersManager
-from MyLibrary.common.validators import validate_only_letters
+from MyLibrary.common.validators import validate_only_letters, MinDateValidator, MaxDateValidator
 
 
 class AppUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):

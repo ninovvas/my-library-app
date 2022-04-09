@@ -80,3 +80,44 @@ class CreateProfileForm(BootstrapFormMixin, UserCreationForm):
                 }
             ),
         }
+
+
+class EditProfileForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        #self._init_bootstrap_form_controls()
+        #self.initial['gender'] = Profile.DO_NOT_SHOW
+
+    class Meta:
+        model = Profile
+        fields = ['first_name', 'last_name', 'picture', 'description', 'date_of_birth']
+        widgets = {
+            'first_name': forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter first name',
+                }
+            ),
+            'last_name': forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter last name',
+                }
+            ),
+            'picture': forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter URL',
+                }
+            ),
+            'description': forms.Textarea(
+                attrs={
+                    'placeholder': 'Enter description',
+                    'rows': 3,
+                },
+            ),
+            'date_of_birth': forms.DateInput(
+                attrs={
+                    'placeholder': 'Date of Birth',
+                    'min': '1920-01-01',
+                    'max': '2012-01-01',
+                }
+            )
+        }

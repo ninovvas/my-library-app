@@ -6,17 +6,21 @@
     <meta charset="UTF-8"/>
     <title>MyLibrary Application</title>
     <!-- Static Load -->
+    <!-- Bootstrap CSS -->
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+
+ <link rel="stylesheet" href="{% static '/css/style.css' %}"/>
+
     <!--
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     -->
 
-    <link rel="stylesheet" href="{% static '/css/style.css' %}"/>
+
 
 
     <!--
@@ -30,17 +34,23 @@
   https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+
     -->
 </head>
 
-<body>
-<div id="box">
 
+<body>
+
+
+
+
+<span id="box">
     <!-- Navigation Bar -->
     <header>
 
 
-        <nav>
+        <nav_top>
             <a class="active" href="{% url 'index' %}"><i class="fa fa-fw fa-home"></i> Home</a>
         {% comment %}
             <a href="#"><i class="fa fa-fw fa-search"></i> Search</a>
@@ -65,30 +75,57 @@
                     <li><a href="{% url 'register' %}"><i class="fa fa-fw fa-users"></i>Registration</a></li>
                 {% endif %}
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'logout user' %}"><i class="fa fa-fw fa-user"></i>Logout</a></li>
+                    <li><a href="{% url 'logout user' %}"><i class="fa fa-fw fa-user"></i>Logout ({{ user.email }})</a></li>
                 {% endif %}
 
             </ul>
-        </nav>
+        </nav_top>
+
     </header>
     {% if user.is_authenticated and not user.is_superuser  %}
         <header>
-            <nav_auth>
-                <a href="{% url 'search book' %}"><i class="fa fa-fw fa-plus"></i>Add Book</a>
-                <ul>
-
-                        <li>
-                            <form method="GET" action="{% url 'user search book' %}" class="form-inline my-1 my-lg-0">
-                            {% csrf_token %}
-                          <input class="form-control mr-sm-2"  name="q" type="search" placeholder="Search" aria-label="Search">
-                          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                         </form>
-                        </li>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="{% url 'dashboard' %}"><i class="fa fa-fw fa-dashboard"></i>My Dashboard</a>
+                <a class="navbar-brand" href="{% url 'search book' %}"><i class="fa fa-fw fa-plus"></i>Add Book</a>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="navbar-brand dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fa fa-fw fa-list"></i>Authors
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item"href="{% url 'authors view'%}"><i class="fa fa-fw fa-users"></i>Authors</a>
+                            <a class="dropdown-item"href="{% url 'create author'%}"><i class="fa fa-fw fa-plus"></i>Create Author</a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="navbar-brand dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fa fa-fw fa-list"></i>My Profile
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item"href="{% url 'details profile' user.pk %}"><i class="fa fa-fw fa-info"></i>Details Profile</a>
+                            <a class="dropdown-item"href="{% url 'edit profile' user.pk %}"><i class="fa fa-fw fa-edit"></i>Edit Profile</a>
+                            <a class="dropdown-item"href="{% url 'change user password' %}"><i class="fa fa-fw fa-edit"></i>Change Password</a>
+                        </div>
+                    </li>
                 </ul>
 
-
-            </nav_auth>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                </div>
+                {% if list_books %}
+                    <h5 style="padding-right: 5px; text-align: center">Books: <b>{{list_books|length}}</b></h5>
+                {% endif %}
+                <div>
+                    <form method="GET" action="{% url 'user search book' %}" class="form-inline my-2 my-lg-0">
+                        {% csrf_token %}
+                        <input class="form-control mr-sm-2" name="q" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+            </nav>
         </header>
+
     {% endif %}
     <!-- End Navigation Bar -->
 
@@ -96,7 +133,7 @@
 
     {% block page_content %}
     {% endblock %}
-
+<
     <!-- Footer -->
     <footer>
         <div>

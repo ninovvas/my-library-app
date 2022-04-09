@@ -9,7 +9,7 @@ body {
 
 }
 
-nav,
+nav_top,
 footer {
     background-color: #0B0C10;
     width: 100%;
@@ -35,7 +35,7 @@ nav_auth {
     color: white;
 }
 
-nav a {
+nav_top a {
     text-decoration: none;
     color: #8f8f8f;
     font-size: 20px;
@@ -53,7 +53,7 @@ nav_auth a {
     margin: 10px;
 }
 
-nav ul {
+nav_top ul {
     margin: 0 0 0 auto;
 }
 
@@ -61,7 +61,7 @@ nav_auth ul {
     margin: 0 0 0 auto;
 }
 
-nav ul li {
+nav_top ul li {
     display: inline;
     margin: 0 2px;
 }
@@ -75,7 +75,7 @@ li::before {
     display: inline;
 }
 
-nav a {
+nav_top a {
     text-decoration: none;
     border-radius: 50%;
     color: white;
@@ -98,7 +98,7 @@ footer {
     font-weight: bold;
 }
 
-nav a:hover {
+nav_top a:hover {
     cursor: pointer;
     color: #45a29e;
     font-weight: bolder;
@@ -124,7 +124,7 @@ nav_auth a:hover {
     width: 80%
 }
 
-nav > img {
+nav_top > img {
     width: 90px;
     height: 80px;
     margin-left: 0.2em;
