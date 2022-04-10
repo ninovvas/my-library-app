@@ -58,9 +58,8 @@ class CreateBookForm(ModelForm):
         book = super().save(commit=False)
         book.user = self.user
 
-
         if commit:
-            #authors
+            #if book.user.has_perm('main.create_book')
             l_authors = self.__manage_authors(self.cleaned_data['authors'])
             l_authors_obj = []
             for auth in l_authors:

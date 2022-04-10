@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 
 from django import forms
+from django.contrib.auth.models import Permission, Group
 
 from MyLibrary.accounts.models import Profile
 from MyLibrary.common.helper import BootstrapFormMixin
@@ -39,6 +40,11 @@ class CreateProfileForm(BootstrapFormMixin, UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=commit)
+        group = Group.objects.get(name='app_default')
+        group.user_set.add(user)
+
+
+
 
         profile = Profile(
             first_name=self.cleaned_data['first_name'],

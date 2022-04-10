@@ -48,6 +48,7 @@ class Author(models.Model):
         blank=True,
     )
 
+
     user = models.ForeignKey(
         AppUser,
         on_delete=models.CASCADE,
@@ -189,6 +190,9 @@ class Book(models.Model):
         AppUser,
         on_delete=models.CASCADE,
     )
+
+    def __str__(self):
+        return self.title
 
 
 

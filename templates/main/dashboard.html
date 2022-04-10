@@ -9,7 +9,7 @@
 <section>
 
     <!--  If No albums in catalog -->
-    <h1>
+
     {% if not list_books %}
         <h1>No books available!</h1>
         <h2>Please add book to your library!</h2>
@@ -79,7 +79,7 @@
 
                         </div>
                         <div class="align-items-center align-content-center col-md-3 border-left mt-1">
-                            <div class="d-flex flex-column mt-4">
+                            <div class="d-flex flex-column mt-2">
                                 <a href="{% url 'edit book' book.pk %}"><button class="btn-primary btn-lg" type="button"><i class="fa fa-edit">Edit</i></button></a>
                                 <a href="{% url 'details book' book.pk %}"><button class="btn-primary btn-lg" type="button"><i class="fa fa-info">Details</i></button></a>
                             </div>
@@ -90,64 +90,6 @@
         </div>
     </div>
 {% endif %}
-
-    <!-- First Card-Box in catalog -->
-        {% comment %}
-     {% for album in albums %}
-    <div class="card-box">
-        <img src="{{ album.image_url }}" alt="{{ album.description }}">
-        <div>
-            <div class="text-center">
-                <p class="name">Name: {{ album.name}}</p>
-                <p class="artist">Artist: {{ album.artist }}</p>
-                <p class="genre">Genre: {{ album.genre }}</p>
-                <p class="price">Price: ${{ album.price|floatformat:2 }}</p>
-            </div>
-            <div class="btn-group">
-                <a href="{% url 'album details page' album.id%}">Details</a>
-            </div>
-        </div>
-    </div>
-     {% endfor %}
-     {% endcomment %}
-
-    <!-- End First Card-Box in catalog -->
-
-    <!-- Second Card-Box in catalog -->
-    {% comment %}
-    <div class="card-box">
-        <img src="/static/images/pinkFloyd.jpg">
-        <div>
-            <div class="text-center">
-                <p class="name">Name: The Dark Side of the Moon</p>
-                <p class="artist">Artist: Pink Floyd</p>
-                <p class="genre">Genre: Rock Music</p>
-                <p class="price">Price: $28.75</p>
-            </div>
-            <div class="btn-group">
-                <a href="#">Details</a>
-            </div>
-        </div>
-    </div>
-    <!-- End Second Card-Box in catalog -->
-
-    <!-- Third Card-Box in catalog -->
-    <div class="card-box">
-        <img src="/static/images/Lorde.jpg">
-        <div>
-            <div class="text-center">
-                <p class="name">Name: Melodrama</p>
-                <p class="artist">Artist: Lorde</p>
-                <p class="genre">Genre: Pop Music</p>
-                <p class="price">Price: $7.33</p>
-            </div>
-            <div class="btn-group">
-                <a href="#">Details</a>
-            </div>
-        </div>
-    </div>
-    <!-- End Third Card-Box in catalog -->
-    {% endcomment %}
 
 </section>
 {% endblock %}

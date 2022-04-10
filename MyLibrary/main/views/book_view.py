@@ -1,9 +1,11 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, TemplateView, FormView, ListView, UpdateView, DeleteView
 from django.views.generic.detail import SingleObjectMixin, DetailView
 
+from MyLibrary.common.view_mixins import RedirectPermissionRequiredMixin
 from MyLibrary.main.forms import SearchBookForm, CreateBookForm, AuthorsBookForm, EditBookForm, DetailsBookForm, \
     DeleteBookForm
 from MyLibrary.main.models import Book
@@ -15,12 +17,13 @@ authors = ['name', 'email']
 all_fields = book_fields + authors
 
 
-#LoginRequiredMixin
-class CreateBookView(LoginRequiredMixin, CreateView):
+class CreateBookView(LoginRequiredMixin, RedirectPermissionRequiredMixin, CreateView):
     #model = Book
+    permission_required = ('main.add_book',)
     form_class = CreateBookForm
     template_name = 'main/book_create.html'
     success_url = reverse_lazy('dashboard')
+
 
     def get_initial(self, *args, **kwargs):
         initial = super().get_initial(**kwargs)
@@ -47,10 +50,13 @@ class CreateBookView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class SearchBookView(LoginRequiredMixin, FormView):
+class SearchBookView(LoginRequiredMixin, RedirectPermissionRequiredMixin, FormView):
+    permission_required = ('main.add_book',)
     template_name = 'main/book_search.html'
     form_class = SearchBookForm
     success_url = reverse_lazy('add book')
+    #permission_required = ('MyLibrary.main.add_book',)
+
     fields = []
 
     def get_form_kwargs(self):
@@ -114,28 +120,28 @@ class SearchBookView(LoginRequiredMixin, FormView):
                 del self.request.session[session_key]
 
 
-class EditBookView(LoginRequiredMixin, UpdateView):
+class EditBookView(LoginRequiredMixin,RedirectPermissionRequiredMixin, UpdateView):
     model = Book
     template_name = 'main/book_edit.html'
     form_class = EditBookForm
+    permission_required = ('main.change_book',)
 
     def get_success_url(self):
         return reverse_lazy('details book', kwargs={'pk': self.object.id})
 
 
-class DetailsBookView(LoginRequiredMixin, DetailView):
+class DetailsBookView(LoginRequiredMixin,RedirectPermissionRequiredMixin, DetailView):
     model = Book
     template_name = 'main/book_details.html'
     form_class = DetailsBookForm
     context_object_name = 'book_details'
+    permission_required = ('main.view_book',)
 
 
-class DeleteBookView(LoginRequiredMixin, DeleteView):
+class DeleteBookView(LoginRequiredMixin,RedirectPermissionRequiredMixin, DeleteView):
     model = Book
     template_name = "main/book_delete.html"
-    #form_class = DeleteBookForm
-
-
+    permission_required = ('main.delete_book',)
     success_url = reverse_lazy('dashboard')
 
     # def get_queryset(self):

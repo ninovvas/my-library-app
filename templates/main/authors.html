@@ -1,0 +1,38 @@
+<!-- Catalog with Albums-->
+{% extends 'base.html' %}
+{%  block page_content %}
+
+    {% comment %}
+
+<section id="catalogPage">
+{% endcomment %}
+<section>
+
+    <!--  If No albums in catalog -->
+    {% if not list_authors %}
+        <h1>No Authors available!</h1>
+        <h2>Please add a new author to your library!</h2>
+    {% else %}
+
+         <input type="text" style ="margin-bottom: 12px; margin-top: 25px;" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+            <table id="myTable">
+              <tr class="header">
+                <th >Name</th>
+                <th >Country</th>
+              </tr>
+                {% for author in list_authors %}
+              <tr>
+                  <td>{{ author.name }}</td>
+                  <td><a href="{% url 'edit author' author.pk %}"><button class="btn-primary btn-lg" type="button"><i class="fa fa-info">Details</i></button></a></td>
+              </tr>
+            {% endfor %}
+
+    </table>
+
+    {% endif %}
+
+
+
+
+</section>
+{% endblock %}
