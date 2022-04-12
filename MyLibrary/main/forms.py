@@ -120,7 +120,8 @@ class CreateBookForm(ModelForm):
             'description': 'Description',
             'isbn10': 'ISBN-10',
             'isbn13': 'ISBN-13',
-            'Pages': 'page_count',
+            'image': 'URL Image',
+            'page_count': 'Pages',
             'language': 'Language',
 
     }

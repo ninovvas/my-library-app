@@ -9,7 +9,7 @@ class AuthorsView(LoginRequiredMixin, RedirectPermissionRequiredMixin, ListView)
     model = Author
     template_name = 'main/authors.html'
     context_object_name = 'list_authors'
-    permission_required = ('main.delete_author',)
+    permission_required = ('main.view_author',)
 
     # def get_queryset(self):
     #     return Book.objects.filter(

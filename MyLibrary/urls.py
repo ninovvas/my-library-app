@@ -25,3 +25,5 @@ urlpatterns = [
     path('accounts/', include('MyLibrary.accounts.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'MyLibrary.accounts.views.error_404'

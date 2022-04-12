@@ -2,8 +2,10 @@ from django.contrib.auth import login
 from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordChangeView
 
 # Create your views here.
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView
+
 
 from MyLibrary.accounts.forms import CreateProfileForm, EditProfileForm
 from MyLibrary.accounts.models import Profile
@@ -36,10 +38,6 @@ class UserLoginView(LoginView):
         else:
             return self.success_url_search_book
 
-        # if self.success_url:
-        #     return self.success_url
-        # return super().get_success_url()
-
 
 class ProfileLogoutView(LogoutView):
     template_name = 'accounts/logout_page.html'
@@ -47,7 +45,7 @@ class ProfileLogoutView(LogoutView):
 
 class ProfileDetailsView(DetailView):
     model = Profile
-    template_name = 'accounts/profile-details.html'
+    template_name = 'accounts/profile_details.html'
     context_object_name = 'profile'
 
     def get_context_data(self, **kwargs):
@@ -79,5 +77,13 @@ class ProfileEditView(UpdateView):
     def get_success_url(self):
         return reverse_lazy('details profile', kwargs={'pk': self.object.user_id})
 
+
 class UserResetPasswordView(PasswordResetView):
     pass
+
+
+def error_404(request, exception):
+    contex = {
+        'message': "You should create a profile to open this page!"
+    }
+    return render(request, 'main/404_error.html', context=contex)

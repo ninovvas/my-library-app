@@ -44,8 +44,6 @@ class CreateProfileForm(BootstrapFormMixin, UserCreationForm):
         group.user_set.add(user)
 
 
-
-
         profile = Profile(
             first_name=self.cleaned_data['first_name'],
             last_name=self.cleaned_data['last_name'],
@@ -56,10 +54,7 @@ class CreateProfileForm(BootstrapFormMixin, UserCreationForm):
             gender=self.cleaned_data['gender'],
             user=user,
         )
-        # profile = Profile(
-        #     **self.cleaned_data,
-        #     user=user,
-        # )
+
 
         if commit:
             profile.save()
@@ -91,8 +86,7 @@ class CreateProfileForm(BootstrapFormMixin, UserCreationForm):
 class EditProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        #self._init_bootstrap_form_controls()
-        #self.initial['gender'] = Profile.DO_NOT_SHOW
+
 
     class Meta:
         model = Profile
@@ -122,8 +116,6 @@ class EditProfileForm(forms.ModelForm):
             'date_of_birth': forms.DateInput(
                 attrs={
                     'placeholder': 'Date of Birth',
-                    'min': '1920-01-01',
-                    'max': '2012-01-01',
                 }
             )
         }
