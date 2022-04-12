@@ -9,7 +9,7 @@ from django.views.generic import CreateView, DetailView, UpdateView
 
 from MyLibrary.accounts.forms import CreateProfileForm, EditProfileForm
 from MyLibrary.accounts.models import Profile
-from MyLibrary.common.view_mixins import RedirectToDashboard
+from MyLibrary.common.view_mixins import RedirectToDashboard, RedirectPermissionRequiredMixin
 from MyLibrary.main.models import Book
 
 
@@ -24,6 +24,7 @@ class UserRegisterView(RedirectToDashboard,CreateView):
         # request => self.request
         login(self.request, self.object)
         return result
+
 
 class UserLoginView(LoginView):
     template_name = 'accounts/login_page.html'
@@ -43,6 +44,7 @@ class ProfileLogoutView(LogoutView):
     template_name = 'accounts/logout_page.html'
     success_url = reverse_lazy('logout user')
 
+
 class ProfileDetailsView(DetailView):
     model = Profile
     template_name = 'accounts/profile_details.html'
@@ -59,11 +61,11 @@ class ProfileDetailsView(DetailView):
         context.update({
             'total_books_count': total_books_count,
             'total_read_books': total_read_books,
-            'is_owner': self.object.user_id == self.request.user.id,
             'books': books,
         })
 
         return context
+
 
 class ChangeProfilePasswordView(PasswordChangeView):
     template_name = 'accounts/change_password.html'
@@ -75,7 +77,9 @@ class ProfileEditView(UpdateView):
     form_class = EditProfileForm
 
     def get_success_url(self):
-        return reverse_lazy('details profile', kwargs={'pk': self.object.user_id})
+        return reverse_lazy('details profile', kwargs={
+            'pk': self.object.user_id
+        }) #user_id
 
 
 class UserResetPasswordView(PasswordResetView):

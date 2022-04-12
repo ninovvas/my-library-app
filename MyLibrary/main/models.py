@@ -10,6 +10,7 @@ class Author(models.Model):
     FIRST_NAME_MAX_LENGTH = 150
     LAST_NAME_MIN_LENGTH = 2
     LAST_NAME_MAX_LENGTH = 30
+    URL_DEFAULT = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-UpHstLuRde04pBD5oaO6v8UQPoVPGSVpww&usqp=CAU"
 
     # first_name = models.CharField(
     #     max_length=FIRST_NAME_MAX_LENGTH,
@@ -27,10 +28,11 @@ class Author(models.Model):
     #     )
     # )
     #
-    # picture = models.URLField(
-    #     null=True,
-    #     blank=True,
-    # )
+    picture = models.URLField(
+        null=True,
+        blank=True,
+        default=URL_DEFAULT,
+    )
     #
     # salutation = models.CharField(
     #     max_length=10

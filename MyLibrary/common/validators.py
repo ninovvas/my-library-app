@@ -4,9 +4,8 @@ from django.utils.deconstruct import deconstructible
 
 def validate_only_letters(value):
     for ch in value:
-        if not ch.isalpha():
-            # Invalid case
-            raise ValidationError('Value must contain only letters')
+        if not ch.isalpha() and not ch.isspace() and not ch == ",":
+            raise ValidationError('Value must contain only letters and one space and semicolon!')
 
 
 @deconstructible

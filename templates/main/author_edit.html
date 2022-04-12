@@ -1,0 +1,15 @@
+<!--Create Page-->
+{% extends 'base.html' %}
+{%  block page_content %}
+<section class="createPage">
+    <form method="POST" action="{%  url 'edit author' author.pk %}" >
+        <fieldset>
+            <legend>Edit Book</legend>
+                {{ form }}
+                {% csrf_token %}
+                <button class="edit-book" type="submit">Edit</button>
+            </div>
+        </fieldset>
+    </form>
+</section>
+{% endblock %}

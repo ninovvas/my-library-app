@@ -143,22 +143,6 @@ class DeleteBookView(LoginRequiredMixin,RedirectPermissionRequiredMixin, DeleteV
     permission_required = ('main.delete_book',)
     success_url = reverse_lazy('dashboard')
 
-    # def get_queryset(self):
-    #     owner = self.request.user
-    #     return self.model.objects.filter(user=owner)
-
-    # def get_queryset(self, **kwargs):
-    #     query = super().get_queryset()
-    #     return Book.objects.filter(
-    #         user=self.request.user,
-    #         authors__book__authors=query.
-    #     )
-
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     queryset = queryset.filter(pk=self.pk)
-    #
-    #     return queryset
 
 
 

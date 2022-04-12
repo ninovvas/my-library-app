@@ -172,35 +172,69 @@ class DeleteBookForm(ModelForm):
         exclude = ['user']
 
 
+
+##################
+#Authors
+##################
+
+class DetailsAuthorForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    class Meta:
+        model = Author
+        exclude = ['user']
+
 class CreateAuthorForm(ModelForm):
 
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.user = user
+
     def save(self, commit=True):
-        author = super().save(commit=False)
-        Author.objects.get(name=self.cleaned_data['name'])
-        #author.user = self.instance.user
 
         if commit:
             try:
                 new_author = Author.objects.get(
                     name=self.cleaned_data['name'],
+                    user=self.user
                 )
-            except Publisher.DoesNotExist:
+            except Author.DoesNotExist:
                 new_author = Author(
                     name=self.cleaned_data['name'],
                     email=self.cleaned_data['email'],
+                    user_id=self.user.id
                 )
-            new_author = self.instance.user
             new_author.save()
-            author.save()
+
         return new_author
 
     class Meta:
         model = Author
-        fields = ('name','email')
+        fields = ('name','email', 'picture')
         labels = {
             'name': 'Name',
-            'email': 'Email'
+            'email': 'Email',
+            'picture': 'URL Image',
         }
+
+class EditAuthorForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def get_queryset(self):
+        queryset = Author.objects.get(user=self.instance.user, user__author=self.object.id)
+        return queryset
+
+    class Meta:
+        model = Author
+        fields = ['name', 'email', 'picture']
+        labels = {
+            'name': 'Name',
+            'email': 'Email',
+            'picture': 'URL Image',
+        }
+
 
 
 

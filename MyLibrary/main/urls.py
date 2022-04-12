@@ -22,7 +22,7 @@ urlpatterns = [
     path('author/create/', CreateAuthorView.as_view(), name="create author"),
     path('author/details/<int:pk>', DetailsAuthorView.as_view(), name="details author"),
     path('author/edit/<int:pk>', EditAuthorView.as_view(), name="edit author"),
-    path('author/delete/<int:pk>', DeleteAuthorView.as_view(), name="edit author"),
+    path('author/delete/<int:pk>', DeleteAuthorView.as_view(), name="delete author"),
 
 
     path('admin/category/', CategoryView.as_view(), name='category view'),

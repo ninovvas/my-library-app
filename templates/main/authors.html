@@ -23,7 +23,7 @@
                 {% for author in list_authors %}
               <tr>
                   <td>{{ author.name }}</td>
-                  <td><a href="{% url 'edit author' author.pk %}"><button class="btn-primary btn-lg" type="button"><i class="fa fa-info">Details</i></button></a></td>
+                  <td><a href="{% url 'details author' author.pk %}"><button class="btn-primary btn-lg" type="button"><i class="fa fa-info">Details</i></button></a></td>
               </tr>
             {% endfor %}
 
