@@ -18,7 +18,6 @@ all_fields = book_fields + authors
 
 
 class CreateBookView(LoginRequiredMixin, RedirectPermissionRequiredMixin, CreateView):
-    #model = Book
     permission_required = ('main.add_book',)
     form_class = CreateBookForm
     template_name = 'main/book_create.html'

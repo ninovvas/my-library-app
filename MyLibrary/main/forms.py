@@ -173,7 +173,35 @@ class DeleteBookForm(ModelForm):
 
 
 class CreateAuthorForm(ModelForm):
-    pass
+
+    def save(self, commit=True):
+        author = super().save(commit=False)
+        Author.objects.get(name=self.cleaned_data['name'])
+        #author.user = self.instance.user
+
+        if commit:
+            try:
+                new_author = Author.objects.get(
+                    name=self.cleaned_data['name'],
+                )
+            except Publisher.DoesNotExist:
+                new_author = Author(
+                    name=self.cleaned_data['name'],
+                    email=self.cleaned_data['email'],
+                )
+            new_author = self.instance.user
+            new_author.save()
+            author.save()
+        return new_author
+
+    class Meta:
+        model = Author
+        fields = ('name','email')
+        labels = {
+            'name': 'Name',
+            'email': 'Email'
+        }
+
 
 
 

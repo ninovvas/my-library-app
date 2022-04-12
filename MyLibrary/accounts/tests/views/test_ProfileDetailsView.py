@@ -9,7 +9,7 @@ from MyLibrary.main.models import Author, Publisher, Book
 
 UserModel = get_user_model()
 
-class ProfileDetailsView(TestCase):
+class ProfileDetailsViewTest(TestCase):
     def setUp(self) -> None:
 
         self.VALID_USER_CREDENTIALS = {
@@ -97,9 +97,14 @@ class ProfileDetailsView(TestCase):
         self.assertTemplateUsed('accounts/profile_details.html')
 
     def test_profile_details__when_profile_view__expect_context_details_view(self):
-        user, profile, authors, publisher, book = self.__create_valid_user_and_profile_and_book()
+        #user, profile, authors, publisher, book = self.__create_valid_user_and_profile_and_book()
+        user = UserModel.objects.create_user(**self.VALID_USER_CREDENTIALS)
+        profile = Profile.objects.create(
+            **self.VALID_PROFILE_DATA,
+            user=user,
+        )
 
-        response = self.client.post(reverse('details profile', kwargs={'pk': profile.pk}))
+        response = self.client.get(reverse('details profile', kwargs={'pk': profile.pk}))
         self.assertEqual(response.status_code, 200)
 
         # Assert
