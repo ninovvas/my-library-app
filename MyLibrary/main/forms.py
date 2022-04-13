@@ -6,14 +6,17 @@ from urllib.request import urlopen
 from cloudinary.compat import urllib2
 from django import forms
 from django.core.files import File
-from django.forms import ModelForm
+from django.forms import ModelForm, DateInput
 
 from MyLibrary.common.helper import DisabledFieldsFormMixin
 from MyLibrary.main.models import Book, Author, Publisher
 
 
 class SearchBookForm(forms.Form):
-    input_search = forms.CharField(max_length=255)
+    input_search = forms.CharField(
+        max_length=255,
+        label='Search a book using ISBN or Title',
+    )
 
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -21,9 +24,6 @@ class SearchBookForm(forms.Form):
 
     class Meta:
         fields = ('input_search',)
-        labels = {
-            'input_search': 'ISBN or Title',
-    }
 
 
 class CreateBookForm(ModelForm):
@@ -41,17 +41,6 @@ class CreateBookForm(ModelForm):
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.user = user
-
-    # def clean(self, *args, **kwargs):
-    #     all_data = self.cleaned_data
-    #     url_image = all_data['image']
-    #     if url_image:
-    #         img_temp = NamedTemporaryFile(delete=True)
-    #         img_temp.write(urlopen(url_image).read())
-    #         img_temp.flush()
-    #         all_data['image'] = File(img_temp)
-    #
-    #     return all_data
 
     def save(self, commit=True):
         #return the created object
@@ -147,7 +136,18 @@ class EditBookForm(ModelForm):
 
     class Meta:
         model = Book
-        exclude = ['user']
+        #exclude = ['user']
+        fields = ['title', 'authors', 'description', 'publisher', 'page_count', 'isbn10', 'isbn13', 'language', 'read',
+                  'start_read_date', 'end_read_date', 'user_comment']
+
+        #start_read_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
+        widgets = {
+            'start_read_date': forms.DateInput(format=('%d-%m-%Y'), attrs={'class': 'datepicker'}),
+            'end_read_date': forms.DateInput(format=('%d-%m-%Y'), attrs={'class': 'datepicker'}),
+
+        }
+
+
 
 
 class DetailsBookForm(ModelForm):

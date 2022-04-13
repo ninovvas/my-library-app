@@ -56,16 +56,16 @@ transbox {
 
     .btn-primary {
         color: #212529;
-        background-color: #7cc;
-        border-color: #5bc2c2;
+        background-color: #eeeeee;
+        border-color: #eeeeee;
         width: 120px !important;
 
     }
 
     .btn-primary:hover {
         color: #212529;
-        background-color: #52bebe;
-        border-color: #8ad3d3
+        background-color: #e2e2e2;
+        border-color: #e2e2e2
     }
 
     .btn-primary:focus,

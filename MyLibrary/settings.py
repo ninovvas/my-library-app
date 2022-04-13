@@ -46,7 +46,11 @@ MYLIBRARY_APPS = [
     'MyLibrary.accounts',
 ]
 
-INSTALLED_APPS = DJANGO_APPS + MYLIBRARY_APPS
+#EXTERNAL_LIBRARY = [
+#    'bootstrap_datepicker_plus',
+#]
+
+INSTALLED_APPS = DJANGO_APPS + MYLIBRARY_APPS #+ EXTERNAL_LIBRARY
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

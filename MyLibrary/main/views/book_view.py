@@ -14,6 +14,9 @@ from MyLibrary.common.BookAPI import BookSearch
 
 book_fields = ['title','authors','description','isbn10','isbn13','page_count','publisher','language']
 authors = ['name', 'email']
+CONNECT_DATA_FIELDS = {
+    'thumbnail': 'image'
+}
 all_fields = book_fields + authors
 
 
@@ -68,11 +71,9 @@ class SearchBookView(LoginRequiredMixin, RedirectPermissionRequiredMixin, FormVi
         form.user = self.request.user
 
         search_query = form.cleaned_data
-        print(f"search_query = {search_query}")
         book_search = BookSearch(search_query['input_search'])
         book_search.make_a_search()
         results = book_search.get_search_results()
-        print(f"results = {results}")
         #delete previous sessions if exist
         self._reset_all_sessions()
         if results is not None:
@@ -102,6 +103,9 @@ class SearchBookView(LoginRequiredMixin, RedirectPermissionRequiredMixin, FormVi
             elif 'publisher' == data_key:
                 session_key = data_key
                 session_value = data['publisher']
+            elif 'image' == CONNECT_DATA_FIELDS.get(data_key, ''):
+                session_key = 'image'
+                session_value = data[data_key]
             else:
                 session_key = data_key
                 session_value = data[data_key]
@@ -110,8 +114,8 @@ class SearchBookView(LoginRequiredMixin, RedirectPermissionRequiredMixin, FormVi
             self.request.session[session_key] = session_value
             self.fields.append(session_key)
 
-        for key, value in self.request.session.items():
-            print(f"Sessions: {key, value}")
+        # for key, value in self.request.session.items():
+        #     print(f"Sessions: {key, value}")
 
     def _reset_all_sessions(self):
         for session_key in all_fields:

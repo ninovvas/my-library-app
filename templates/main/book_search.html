@@ -9,8 +9,8 @@
             <div class="container">
                 {{form }}
                  {% csrf_token %}
-                <button class="add-album" type="submit">ISBN, Title Search</button>
-                <a href="{%  url 'add book' %}" ><button type="button" class="add-album">Add book manual</button></a>
+                <button class="add-book" type="submit"><b>ISBN, Title Search</b></button>
+                <a href="{%  url 'add book' %}" style="text-decoration: none;"><button type="button" class="add-book">Add book manual</button></a>
 
             </div>
         </fieldset>
