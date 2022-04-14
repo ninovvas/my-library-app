@@ -2,18 +2,7 @@
 {% extends 'base.html' %}
 {%  block page_content %}
 <section class="createPage">
-    <h1>Yoe has been successfull logout!</h1>
-    {% comment %}
-    <form method="POST" action="{%  url 'login user' %}" >
-        <fieldset>
-            <legend>Login User</legend>
+    <h2>Yoe has been successfully logout!</h2>
 
-                {{ form }}
-                {% csrf_token %}
-                <button class="add-album" type="submit">Login</button>
-            </div>
-        </fieldset>
-    </form>
-    {% endcomment %}
 </section>
 {% endblock %}

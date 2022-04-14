@@ -2,14 +2,12 @@
 {% extends 'base.html' %}
 {%  block page_content %}
 <section class="createPage">
-
-    <form method="POST" action="{%  url 'login user' %}" >
+    <form method="post" action="{%  url 'add publisher' %}" >
         <fieldset>
-            <legend>Login User</legend>
-
+            <legend>Add Publisher</legend>
                 {{ form }}
                 {% csrf_token %}
-                <button class="add-book" type="submit">Login</button>
+                <button class="add-book" type="submit">Add Publisher</button>
             </div>
         </fieldset>
     </form>

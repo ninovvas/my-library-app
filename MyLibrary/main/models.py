@@ -64,6 +64,8 @@ class Publisher(models.Model):
     MAX_NAME_LENGTH = 30
     MAX_ADDRESS_LENGTH = 50
 
+    DEFAULT_ICON_PUBLISHER = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtObUcm2uXIDJRCDiR9LR78ELprMevIEf8-w&usqp=CAU"
+
     publisher_name = models.CharField(max_length=MAX_NAME_LENGTH)
 
     address = models.CharField(
@@ -90,6 +92,11 @@ class Publisher(models.Model):
     website = models.URLField(
         null=True,
         blank=True,
+    )
+    icon = models.URLField(
+        null=True,
+        blank=True,
+        default=DEFAULT_ICON_PUBLISHER,
     )
 
     user = models.ForeignKey(

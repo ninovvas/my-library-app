@@ -3,12 +3,14 @@ from django.contrib.auth import models as auth_models
 from django.contrib.auth.models import PermissionsMixin
 from django.core.validators import MinLengthValidator
 from django.db import models
+from django.forms import DateInput
 
 from MyLibrary.accounts.managers import AppUsersManager
 from MyLibrary.common.validators import validate_only_letters, MinDateValidator, MaxDateValidator
 
 
 class AppUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
+
 
     email = models.EmailField(
         unique=True,
@@ -34,6 +36,7 @@ class Profile(models.Model):
     FIRST_NAME_MAX_LENGTH = 30
     LAST_NAME_MIN_LENGTH = 2
     LAST_NAME_MAX_LENGTH = 30
+    URL_DEFAULT = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-UpHstLuRde04pBD5oaO6v8UQPoVPGSVpww&usqp=CAU"
 
     MALE = 'Male'
     FEMALE = 'Female'
@@ -57,7 +60,11 @@ class Profile(models.Model):
         )
     )
 
-    picture = models.URLField()
+    picture = models.URLField(
+        null=True,
+        blank=True,
+        default=URL_DEFAULT,
+    )
 
     date_of_birth = models.DateField(
         null=True,
@@ -82,6 +89,7 @@ class Profile(models.Model):
         on_delete=models.CASCADE,
         primary_key=True,
     )
+
 
     @property
     def full_name(self):

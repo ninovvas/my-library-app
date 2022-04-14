@@ -18,7 +18,7 @@
                             <div class="mt-1 mb-1 spec-1">
                                 <b>Authors:</b>
                                 {% for author in book_details.authors.all %}
-                                    <span> <span class="dot"></span>{{ author.name }}</span>
+                                    <span> <span class="dot"></span><a href="{% url 'details author' author.pk %}" target="_blank"  style="text-decoration: none;">{{ author.name }}</a></span>
                                 {% endfor %}
                             </div>
                             <div class="mt-1 mb-1 spec-1">
@@ -28,7 +28,7 @@
                             {%if book_details.publisher %}
                                  <div class="mt-1 mb-1 spec-1">
                                      <b>Publisher:</b>
-                                    <span> {{ book_details.publisher.publisher_name }}</span>
+                                    <span> <span class="dot"></span><a href="{% url 'details publisher' book_details.publisher.pk %}" target="_blank"  style="text-decoration: none;">{{ book_details.publisher.publisher_name }}</a></span>
                                 </div>
                             {% endif %}
                             {%if book_details.page_count %}

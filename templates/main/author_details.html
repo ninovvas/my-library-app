@@ -18,7 +18,21 @@
                             <h5>{{ author_details.name }}</h5>
                             <div class="mt-1 mb-1 spec-1">
                                      <b>Email:</b>
-                                    <span> {{ author_details.email }}</span>
+                                    {% if author_details.email %}
+                                        <span> {{ author_details.email }}</span>
+                                    {% else %}
+                                        <span>No Email available!</span>
+                                    {% endif %}
+                            </div>
+                             <div class="mt-1 mb-1 spec-1">
+                                     <b>Books:</b>
+                                {% if author_has_books %}
+                                     {% for author_has_book in author_has_books %}
+                                        <span> <span class="dot"></span><a href="{% url 'details book' author_has_book.pk %}" target="_blank"  style="text-decoration: none;">{{ author_has_book.title }}</a></span>
+                                     {% endfor %}
+                                {% else %}
+                                    <span>No books available in my Library!</span>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="align-items-center align-content-center col-md-3 border-left mt-1">

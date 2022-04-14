@@ -4,7 +4,7 @@ from django.views.generic import CreateView, ListView, DetailView, UpdateView, D
 
 from MyLibrary.common.view_mixins import RedirectPermissionRequiredMixin
 from MyLibrary.main.forms import CreateAuthorForm, DetailsBookForm, DetailsAuthorForm, EditAuthorForm
-from MyLibrary.main.models import Author
+from MyLibrary.main.models import Author, Book
 
 
 class AuthorsView(LoginRequiredMixin, RedirectPermissionRequiredMixin, ListView):
@@ -13,10 +13,6 @@ class AuthorsView(LoginRequiredMixin, RedirectPermissionRequiredMixin, ListView)
     context_object_name = 'list_authors'
     permission_required = ('main.view_author',)
 
-    # def get_queryset(self):
-    #     return Book.objects.filter(
-    #         user=self.request.user,
-    #     )
 
 class CreateAuthorView(LoginRequiredMixin,RedirectPermissionRequiredMixin, CreateView):
     permission_required = ('main.add_author',)
@@ -36,6 +32,14 @@ class DetailsAuthorView(LoginRequiredMixin, RedirectPermissionRequiredMixin,  De
     template_name = 'main/author_details.html'
     form_class = DetailsAuthorForm
     context_object_name = 'author_details'
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailsAuthorView, self).get_context_data()
+        author_has_books = Book.objects.filter(authors__id=self.object.id)
+        context['author_has_books'] = author_has_books
+
+        return context
+
 
 class EditAuthorView(LoginRequiredMixin, RedirectPermissionRequiredMixin, UpdateView):
     permission_required = ('main.change_author',)

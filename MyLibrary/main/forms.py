@@ -136,19 +136,15 @@ class EditBookForm(ModelForm):
 
     class Meta:
         model = Book
-        #exclude = ['user']
         fields = ['title', 'authors', 'description', 'publisher', 'page_count', 'isbn10', 'isbn13', 'language', 'read',
                   'start_read_date', 'end_read_date', 'user_comment']
 
-        #start_read_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
         widgets = {
-            'start_read_date': forms.DateInput(format=('%d-%m-%Y'), attrs={'class': 'datepicker'}),
-            'end_read_date': forms.DateInput(format=('%d-%m-%Y'), attrs={'class': 'datepicker'}),
+            'start_read_date': forms.DateInput(format=('%Y-%m-%d'), attrs={'class': 'datepicker'}),
+            'end_read_date': forms.DateInput(format=('%Y-%m-%d'), attrs={'class': 'datepicker'}),
+
 
         }
-
-
-
 
 class DetailsBookForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -172,10 +168,10 @@ class DeleteBookForm(ModelForm):
         exclude = ['user']
 
 
+##################
+# Authors
+##################
 
-##################
-#Authors
-##################
 
 class DetailsAuthorForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -184,6 +180,7 @@ class DetailsAuthorForm(ModelForm):
     class Meta:
         model = Author
         exclude = ['user']
+
 
 class CreateAuthorForm(ModelForm):
 
@@ -218,6 +215,7 @@ class CreateAuthorForm(ModelForm):
             'picture': 'URL Image',
         }
 
+
 class EditAuthorForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -234,6 +232,81 @@ class EditAuthorForm(ModelForm):
             'email': 'Email',
             'picture': 'URL Image',
         }
+
+
+##############
+# Publisher
+##############
+
+class DetailsPublisherForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    class Meta:
+        model = Publisher
+        exclude = ['user']
+
+class CreatePublisherForm(ModelForm):
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.user = user
+
+    def save(self, commit=True):
+
+        if commit:
+            try:
+                new_publisher = Publisher.objects.get(
+                    publisher_name=self.cleaned_data['publisher_name'],
+                    user=self.user
+                )
+            except Publisher.DoesNotExist:
+                new_publisher = Publisher(
+                    publisher_name=self.cleaned_data['publisher_name'],
+                    address=self.cleaned_data['address'],
+                    city=self.cleaned_data['city'],
+                    state_province=self.cleaned_data['state_province'],
+                    country=self.cleaned_data['country'],
+                    website=self.cleaned_data['website'],
+                    user_id=self.user.id
+                )
+            new_publisher.save()
+
+        return new_publisher
+
+    class Meta:
+        model = Publisher
+        fields = ('publisher_name','address', 'city', 'state_province', 'country', 'website', 'icon')
+        labels = {
+            'publisher_name': 'Publisher Name *',
+            'address': 'Address',
+            'city': 'City',
+            'state_province': 'State Province',
+            'country': 'Country',
+            'website': 'Website',
+            'icon': 'URL Icon',
+        }
+
+class EditPublisherForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def get_queryset(self):
+        queryset = Publisher.objects.get(user=self.instance.user, user__publisher=self.object.id)
+        return queryset
+
+    class Meta:
+        model = Publisher
+        fields = ('publisher_name', 'address', 'city', 'state_province', 'country', 'website', 'icon')
+        labels = {
+            'publisher_name': 'Publisher Name *',
+            'address': 'Address',
+            'city': 'City',
+            'state_province': 'State Province',
+            'country': 'Country',
+            'website': 'Website',
+            'icon': 'URL Icon',
+        }
+
 
 
 

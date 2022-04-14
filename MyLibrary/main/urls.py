@@ -3,7 +3,8 @@ from django.urls import path
 from MyLibrary.main.views.author_view import CreateAuthorView, AuthorsView, DetailsAuthorView, EditAuthorView, \
     DeleteAuthorView
 from MyLibrary.main.views.book_view import CreateBookView, SearchBookView, EditBookView, DetailsBookView, DeleteBookView
-from MyLibrary.main.views.category_view import CategoryView
+from MyLibrary.main.views.publisher_view import PublishersView, CreatePublisherView, DetailsPublisherView, \
+    EditPublisherView
 from MyLibrary.main.views.main_view import IndexView, DashboardView, UserSearchBookView
 
 urlpatterns = [
@@ -24,7 +25,10 @@ urlpatterns = [
     path('author/edit/<int:pk>', EditAuthorView.as_view(), name="edit author"),
     path('author/delete/<int:pk>', DeleteAuthorView.as_view(), name="delete author"),
 
+    path('publisher/', PublishersView.as_view(), name="publishers view"),
+    path('publisher/create', CreatePublisherView.as_view(), name="add publisher"),
+    path('publisher/details/<int:pk>', DetailsPublisherView.as_view(), name="details publisher"),
+    path('publisher/edit/<int:pk>', EditPublisherView.as_view(), name="edit publisher"),
 
-    path('admin/category/', CategoryView.as_view(), name='category view'),
 
 ]
