@@ -100,20 +100,20 @@ footer {
 
 nav_top a:hover {
     cursor: pointer;
-    color: #45a29e;
+    color: #c5c6c7;
     font-weight: bolder;
 }
 
 nav_auth a:hover {
     cursor: pointer;
-    color: #45a29e;
+    color: #c5c6c7;
     font-weight: bolder;
 }
 
 #welcomePage {
     float: left;
     width: 50%;
-    color: #45a29e;
+    color: #c5c6c7;
     font-size: 24px;
     padding: 30px;
     margin: 10px;

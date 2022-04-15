@@ -27,8 +27,8 @@ SECRET_KEY = 'django-insecure-ql%3*0a@=7vxp)3ggei#uuxhh_qg6wu0v9hazx46#34rxua1)i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+#ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -44,6 +44,7 @@ DJANGO_APPS = [
 MYLIBRARY_APPS = [
     'MyLibrary.main',
     'MyLibrary.accounts',
+    'MyLibrary.rest_api',
 ]
 
 REST_API = [
@@ -155,6 +156,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.AppUser'
 LOGOUT_REDIRECT_URL = ''
+
 
 cloudinary.config(
     cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME', None),

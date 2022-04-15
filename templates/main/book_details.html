@@ -67,6 +67,12 @@
                                     <span> {{ book_details.description }}</span>
                                 </div>
                             {% endif %}
+                             {%if book_details.user_comment %}
+                                 <div class="mt-1 mb-1 spec-1">
+                                     <b>My Comment:</b>
+                                    <span> {{ book_details.user_comment }}</span>
+                                </div>
+                            {% endif %}
                         </div>
                         <div class="align-items-center align-content-center col-md-3 border-left mt-1">
                             <div class="d-flex flex-column mt-4">

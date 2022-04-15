@@ -105,10 +105,10 @@ class CreateBookForm(ModelForm):
         model = Book
         fields = ('title','description','isbn10','isbn13','image','page_count','language',)
         labels = {
-            'title': 'Title',
+            'title': 'Title *',
             'description': 'Description',
-            'isbn10': 'ISBN-10',
-            'isbn13': 'ISBN-13',
+            'isbn10': 'ISBN-10 *',
+            'isbn13': 'ISBN-13 *',
             'image': 'URL Image',
             'page_count': 'Pages',
             'language': 'Language',
@@ -137,7 +137,7 @@ class EditBookForm(ModelForm):
     class Meta:
         model = Book
         fields = ['title', 'authors', 'description', 'publisher', 'page_count', 'isbn10', 'isbn13', 'language', 'read',
-                  'start_read_date', 'end_read_date', 'user_comment']
+                  'start_read_date', 'end_read_date','image', 'user_comment']
 
         widgets = {
             'start_read_date': forms.DateInput(format=('%Y-%m-%d'), attrs={'class': 'datepicker'}),

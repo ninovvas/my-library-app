@@ -83,29 +83,33 @@ class SearchBookView(LoginRequiredMixin, RedirectPermissionRequiredMixin, FormVi
 
     def _set_session_value(self, data: dict):
         for data_key in data.keys():
-
             if 'authors' == data_key:
-                session_key = data_key
-                session_value = ", ".join(data['authors'])
+                if data[data_key] is not None:
+                    session_key = data_key
+                    session_value = ", ".join(data['authors'])
             elif 'isbns' == data_key:
                 for isbn in data['isbns']:
                     if isbn['type'] == 'ISBN_13':
-                        session_key = 'isbn13'
-                        session_value = isbn['identifier']
+                        if isbn['identifier'] is not None:
+                            session_key = 'isbn13'
+                            session_value = isbn['identifier']
                     elif isbn['type'] == 'ISBN_10':
-                        session_key = 'isbn10'
-                        session_value = isbn['identifier']
+                        if isbn['identifier'] is not None:
+                            session_key = 'isbn10'
+                            session_value = isbn['identifier']
                     else:
                         session_key = ""
                         session_value = ""
                     self.request.session[session_key] = session_value
                     self.fields.append(session_key)
             elif 'publisher' == data_key:
-                session_key = data_key
-                session_value = data['publisher']
+                if data[data_key] is not None:
+                    session_key = data_key
+                    session_value = data['publisher']
             elif 'image' == CONNECT_DATA_FIELDS.get(data_key, ''):
-                session_key = 'image'
-                session_value = data[data_key]
+                if data[data_key] is not None:
+                    session_key = 'image'
+                    session_value = data[data_key]
             else:
                 session_key = data_key
                 session_value = data[data_key]

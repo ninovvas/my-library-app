@@ -25,7 +25,7 @@ class DashboardView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Book.objects.filter(
             user=self.request.user,
-        )
+        ).order_by('title')
 
 
 class UserSearchBookView(ListView):

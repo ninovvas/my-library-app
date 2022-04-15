@@ -12,22 +12,6 @@ class Author(models.Model):
     LAST_NAME_MAX_LENGTH = 30
     URL_DEFAULT = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-UpHstLuRde04pBD5oaO6v8UQPoVPGSVpww&usqp=CAU"
 
-    # first_name = models.CharField(
-    #     max_length=FIRST_NAME_MAX_LENGTH,
-    #     validators=(
-    #         MinLengthValidator(FIRST_NAME_MIN_LENGTH),
-    #         validate_only_letters,
-    #     )
-    # )
-    #
-    # last_name = models.CharField(
-    #     max_length=LAST_NAME_MAX_LENGTH,
-    #     validators=(
-    #         MinLengthValidator(LAST_NAME_MIN_LENGTH),
-    #         validate_only_letters,
-    #     )
-    # )
-    #
     picture = models.URLField(
         null=True,
         blank=True,

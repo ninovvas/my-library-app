@@ -88,6 +88,6 @@ class UserResetPasswordView(PasswordResetView):
 
 def error_404(request, exception):
     contex = {
-        'message': "You should create a profile to open this page!"
+        'message': "You are not authorized to show this page. Please create an account or contact the administrator!"
     }
     return render(request, 'main/404_error.html', context=contex)
