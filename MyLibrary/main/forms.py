@@ -246,6 +246,7 @@ class DetailsPublisherForm(ModelForm):
         model = Publisher
         exclude = ['user']
 
+
 class CreatePublisherForm(ModelForm):
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -269,13 +270,16 @@ class CreatePublisherForm(ModelForm):
                     website=self.cleaned_data['website'],
                     user_id=self.user.id
                 )
-            new_publisher.save()
+                new_publisher.save()
 
         return new_publisher
 
+
     class Meta:
         model = Publisher
-        fields = ('publisher_name','address', 'city', 'state_province', 'country', 'website', 'icon')
+
+
+        fields = ('publisher_name','address', 'city', 'state_province', 'country','email', 'website', 'icon')
         labels = {
             'publisher_name': 'Publisher Name *',
             'address': 'Address',
@@ -284,6 +288,7 @@ class CreatePublisherForm(ModelForm):
             'country': 'Country',
             'website': 'Website',
             'icon': 'URL Icon',
+            'email': 'Email',
         }
 
 class EditPublisherForm(ModelForm):
@@ -296,7 +301,7 @@ class EditPublisherForm(ModelForm):
 
     class Meta:
         model = Publisher
-        fields = ('publisher_name', 'address', 'city', 'state_province', 'country', 'website', 'icon')
+        fields = ('publisher_name', 'address', 'city', 'state_province', 'country','email', 'website', 'icon')
         labels = {
             'publisher_name': 'Publisher Name *',
             'address': 'Address',
@@ -305,6 +310,7 @@ class EditPublisherForm(ModelForm):
             'country': 'Country',
             'website': 'Website',
             'icon': 'URL Icon',
+            'email': 'Email',
         }
 
 

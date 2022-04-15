@@ -33,10 +33,7 @@ class Author(models.Model):
         blank=True,
         default=URL_DEFAULT,
     )
-    #
-    # salutation = models.CharField(
-    #     max_length=10
-    # )
+
     name = models.CharField(
         max_length=FIRST_NAME_MAX_LENGTH,
         validators=(
@@ -66,10 +63,16 @@ class Publisher(models.Model):
 
     DEFAULT_ICON_PUBLISHER = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtObUcm2uXIDJRCDiR9LR78ELprMevIEf8-w&usqp=CAU"
 
-    publisher_name = models.CharField(max_length=MAX_NAME_LENGTH)
+    publisher_name = models.CharField(
+        max_length=MAX_NAME_LENGTH
+    )
 
     address = models.CharField(
         max_length=MAX_ADDRESS_LENGTH,
+        null=True,
+        blank=True,
+    )
+    email = models.EmailField(
         null=True,
         blank=True,
     )
@@ -106,6 +109,7 @@ class Publisher(models.Model):
 
     def __str__(self):
         return self.publisher_name
+
 
 class Book(models.Model):
 

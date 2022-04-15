@@ -46,11 +46,10 @@ MYLIBRARY_APPS = [
     'MyLibrary.accounts',
 ]
 
-#EXTERNAL_LIBRARY = [
-#    'bootstrap_datepicker_plus',
-#]
-
-INSTALLED_APPS = DJANGO_APPS + MYLIBRARY_APPS #+ EXTERNAL_LIBRARY
+REST_API = [
+    'rest_framework',
+]
+INSTALLED_APPS = DJANGO_APPS + MYLIBRARY_APPS + REST_API
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

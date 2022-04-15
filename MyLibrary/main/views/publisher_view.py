@@ -14,7 +14,7 @@ class PublishersView(LoginRequiredMixin, RedirectPermissionRequiredMixin, ListVi
     permission_required = ('main.view_publisher',)
 
 
-class CreatePublisherView(CreateView):
+class CreatePublisherView(LoginRequiredMixin, RedirectPermissionRequiredMixin, CreateView):
     template_name = 'main/publisher_create.html'
 
     permission_required = ('main.add_publisher',)
@@ -43,7 +43,7 @@ class DetailsPublisherView(LoginRequiredMixin, RedirectPermissionRequiredMixin, 
         return context
 
 
-class EditPublisherView(UpdateView):
+class EditPublisherView(LoginRequiredMixin, RedirectPermissionRequiredMixin, UpdateView):
     template_name = 'main/publisher_edit.html'
 
     permission_required = ('main.change_publisher',)
