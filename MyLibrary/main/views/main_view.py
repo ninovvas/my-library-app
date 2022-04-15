@@ -35,7 +35,9 @@ class UserSearchBookView(ListView):
 
     def get_queryset(self):
         search_text = self.request.GET.get('q')
-        return Book.objects.filter(
-            Q(user=self.request.user) & Q(title__icontains=search_text) | Q(isbn10__icontains=search_text) |
-            Q(isbn13__icontains=search_text)
-        )
+        if search_text:
+            return Book.objects.filter(
+                Q(user=self.request.user) & Q(title__icontains=search_text) | Q(isbn10__icontains=search_text) |
+                Q(isbn13__icontains=search_text)
+            )
+        return None

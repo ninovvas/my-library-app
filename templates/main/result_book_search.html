@@ -6,15 +6,12 @@
 <section id="catalogPage">
 {% endcomment %}
 <section>
-    <h1>TETETETETE</h1>
+
     <!--  If No albums in catalog -->
     <h1>
-    {% if result_search %}
-    Result List
-    {% else %}
-        No book has been found!
-        </h1>
-        <p>Please try to search using the ISBN number!</p>
+    {% if not result_search %}
+        <h2>No book has been found!</h2>
+
     {% endif %}
     <!-- If albums in catalog -->
 
