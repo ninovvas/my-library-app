@@ -86,7 +86,15 @@ function myFunction() {
 
 
 $(function() {
-    $( ".datepicker" ).datepicker();
+    $( ".datepicker" ).datepicker({
+
+        changeYear: true,
+         yearRange: "1935:2012"
+    });
+});
+
+$(function() {
+    $( ".datepicker_normal" ).datepicker();
 });
 
 </script>

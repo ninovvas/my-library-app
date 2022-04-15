@@ -7,14 +7,13 @@ from django.contrib.auth.models import Permission, Group
 from django.forms import DateInput
 
 from MyLibrary.accounts.models import Profile
-from MyLibrary.common.helper import BootstrapFormMixin
 
 UserModel = get_user_model()
 
 PROFILE_FORM_FIELDS = ['email', 'password1', 'password2', 'first_name', 'last_name']
 
 
-class CreateProfileForm(BootstrapFormMixin, UserCreationForm):
+class CreateProfileForm(UserCreationForm):
 
     first_name = forms.CharField(
         max_length=Profile.FIRST_NAME_MAX_LENGTH,
@@ -27,7 +26,10 @@ class CreateProfileForm(BootstrapFormMixin, UserCreationForm):
     # )
 
     date_of_birth = forms.DateField(
-        widget=forms.DateInput(format='%d-%m-%Y', attrs={'class': 'datepicker'})
+        widget=forms.DateInput(format='%d-%m-%Y',
+                               attrs={
+                                   'class': 'datepicker',
+                               })
     )
     #date = forms.DateField(widget=forms.DateInput(format='%m-%Y-%d'))
     #description = forms.CharField(
@@ -107,8 +109,10 @@ class EditProfileForm(forms.ModelForm):
                 },
             ),
             'date_of_birth': forms.DateInput(
+                format='%d-%m-%Y',
                 attrs={
                     'placeholder': 'Date of Birth',
+                    'class': 'datepicker',
                 }
             )
         }

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.core.validators import MinLengthValidator
 from django.db import models
 from MyLibrary.accounts.models import AppUser
@@ -135,6 +137,7 @@ class Book(models.Model):
     start_read_date = models.DateField(
         null=True,
         blank=True,
+
     )
 
     end_read_date = models.DateField(

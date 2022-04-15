@@ -8,7 +8,6 @@ from django import forms
 from django.core.files import File
 from django.forms import ModelForm, DateInput
 
-from MyLibrary.common.helper import DisabledFieldsFormMixin
 from MyLibrary.main.models import Book, Author, Publisher
 
 
@@ -140,11 +139,12 @@ class EditBookForm(ModelForm):
                   'start_read_date', 'end_read_date','image', 'user_comment']
 
         widgets = {
-            'start_read_date': forms.DateInput(format=('%Y-%m-%d'), attrs={'class': 'datepicker'}),
-            'end_read_date': forms.DateInput(format=('%Y-%m-%d'), attrs={'class': 'datepicker'}),
+            'start_read_date': forms.DateInput(format=('%Y-%m-%d'), attrs={'class': 'datepicker_normal'}),
+            'end_read_date': forms.DateInput(format=('%Y-%m-%d'), attrs={'class': 'datepicker_normal'}),
 
 
         }
+
 
 class DetailsBookForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -274,11 +274,9 @@ class CreatePublisherForm(ModelForm):
 
         return new_publisher
 
-
     class Meta:
+
         model = Publisher
-
-
         fields = ('publisher_name','address', 'city', 'state_province', 'country','email', 'website', 'icon')
         labels = {
             'publisher_name': 'Publisher Name *',

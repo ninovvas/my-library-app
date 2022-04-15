@@ -1,4 +1,6 @@
 #from django.contrib.auth.base_user import AbstractBaseUser
+import datetime
+
 from django.contrib.auth import models as auth_models
 from django.contrib.auth.models import PermissionsMixin
 from django.core.validators import MinLengthValidator
@@ -42,6 +44,10 @@ class Profile(models.Model):
     FEMALE = 'Female'
     DO_NOT_SHOW = 'Do not show'
 
+
+    MIN_DATE = datetime.date(1930, 1, 1)
+    MAX_DATE = datetime.date(2015, 1, 1)
+
     GENDERS = [(x, x) for x in (MALE, FEMALE, DO_NOT_SHOW)]
 
     first_name = models.CharField(
@@ -69,6 +75,10 @@ class Profile(models.Model):
     date_of_birth = models.DateField(
         null=True,
         blank=True,
+        validators=(
+            MinDateValidator(MIN_DATE),
+            MaxDateValidator(MAX_DATE),
+        )
     )
 
     description = models.TextField(
